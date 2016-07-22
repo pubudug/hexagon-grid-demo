@@ -1,6 +1,7 @@
 package io.github.pubudug.hexgrid.demo;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.util.List;
 
@@ -21,6 +22,11 @@ public class DemoHexagon extends Hexagon {
             p.addPoint((int) corner.getX(), (int) corner.getY());
         }
         dbg.drawPolygon(p);
+    }
+
+    public void drawCoordinates(Graphics2D dbg) {
+        dbg.drawString(getCubeX() + "," + getCubeY() + "," + getCubeZ(), (int) getCenter().getX() - getSize() / 2,
+                (int) getCenter().getY());
     }
 
 }

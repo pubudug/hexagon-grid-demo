@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -31,6 +33,18 @@ public class GamePanel extends JPanel {
         this.grid = grid;
         setPreferredSize(new Dimension(width, height));
         this.stats = stats;
+        addMouseMotionListener(new MouseMotionListener() {
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                grid.mouseOverHexagon(e.getPoint());
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+        });
     }
 
     void update() {
@@ -56,6 +70,8 @@ public class GamePanel extends JPanel {
         stats.draw(dbg);
 
         grid.draw(dbg);
+
+        grid.drawMouseOverCoordinates(dbg);
 
     }
 

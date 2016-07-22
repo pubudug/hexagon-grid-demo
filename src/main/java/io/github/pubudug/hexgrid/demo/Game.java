@@ -9,8 +9,12 @@ public class Game {
         int frameRate = 60;
         int period = 1000000000 / frameRate;
         DemoStats stats = new DemoStats(period);
-        DemoHexagonGrid grid = new DemoHexagonGrid(new DemoHexagonFactory(), 10, 10, 30);
-        GamePanel gamePanel = new GamePanel(grid.getPixelWidth(), grid.getPixelHeight(), stats, grid);
+        int size = 40;
+        int columns = 10;
+        int rows = 10;
+        DemoHexagonGrid grid = new DemoHexagonGrid(new DemoHexagonFactory(), columns, rows, size);
+        GamePanel gamePanel = new GamePanel((int) grid.getHexagon(columns - 1, 0).getCenter().getX(),
+                (int) grid.getHexagon(0, rows - 1).getCenter().getY(), stats, grid);
         GameLoop loop = new GameLoop(period, stats) {
 
             @Override
