@@ -8,8 +8,9 @@ public class Game {
     public static void main(String[] args) {
         int frameRate = 60;
         int period = 1000000000 / frameRate;
-        Stats stats = new Stats(period);
-        GamePanel gamePanel = new GamePanel(500, 400, stats);
+        DemoStats stats = new DemoStats(period);
+        DemoHexagonGrid grid = new DemoHexagonGrid(new DemoHexagonFactory(), 10, 10, 30);
+        GamePanel gamePanel = new GamePanel(500, 400, stats, grid);
         GameLoop loop = new GameLoop(period, stats) {
 
             @Override

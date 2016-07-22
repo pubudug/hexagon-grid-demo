@@ -8,6 +8,11 @@
 	<name>hexagon-grid-demo</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<dependency>
+			<groupId>io.github.pubudug</groupId>
+			<artifactId>hexagon-grid</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

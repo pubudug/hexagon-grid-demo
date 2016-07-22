@@ -2,9 +2,9 @@ package io.github.pubudug.hexgrid.demo;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
@@ -20,11 +20,14 @@ public class GamePanel extends JPanel {
     private int width;
     private int height;
 
-    private Stats stats;
+    private DemoStats stats;
 
-    public GamePanel(int width, int height, Stats stats) {
+    private DemoHexagonGrid grid;
+
+    public GamePanel(int width, int height, DemoStats stats, DemoHexagonGrid grid) {
         this.width = width;
         this.height = height;
+        this.grid = grid;
         setPreferredSize(new Dimension(width, height));
         this.stats = stats;
     }
@@ -45,15 +48,13 @@ public class GamePanel extends JPanel {
         }
 
         // clear the background
-        dbg.setColor(Color.red);
+        dbg.setColor(Color.white);
         dbg.fillRect(0, 0, width, height);
 
-        dbg.setColor(Color.blue);
-        Font font = new Font("SansSerif", Font.BOLD, 12);
-        dbg.setFont(font);
+        stats.draw(dbg);
 
-        dbg.drawString("Average FPS/UPS: " + stats.getAverageFPS() + ", " + stats.getAverageUPS(), 20, 25);
-        dbg.drawString("Frame Count/Loss: " + stats.getFrameCount() + " / " + stats.getTotalFramesSkipped(), 20, 40);
+        grid.draw(dbg);
+
     }
 
     void paintScreen() {
