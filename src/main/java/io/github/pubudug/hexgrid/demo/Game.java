@@ -10,7 +10,7 @@ public class Game {
         int period = 1000000000 / frameRate;
         DemoStats stats = new DemoStats(period);
         DemoHexagonGrid grid = new DemoHexagonGrid(new DemoHexagonFactory(), 10, 10, 30);
-        GamePanel gamePanel = new GamePanel(500, 400, stats, grid);
+        GamePanel gamePanel = new GamePanel(grid.getPixelWidth(), grid.getPixelHeight(), stats, grid);
         GameLoop loop = new GameLoop(period, stats) {
 
             @Override

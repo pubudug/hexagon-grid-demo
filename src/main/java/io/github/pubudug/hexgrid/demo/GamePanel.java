@@ -3,6 +3,7 @@ package io.github.pubudug.hexgrid.demo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 
@@ -16,7 +17,7 @@ public class GamePanel extends JPanel {
 
     private Image dbImage;
 
-    private Graphics dbg;
+    private Graphics2D dbg;
     private int width;
     private int height;
 
@@ -43,7 +44,8 @@ public class GamePanel extends JPanel {
                 System.out.println("dbImage is  null");
                 return;
             } else {
-                this.dbg = dbImage.getGraphics();
+                this.dbg = (Graphics2D) dbImage.getGraphics();
+                dbg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             }
         }
 
