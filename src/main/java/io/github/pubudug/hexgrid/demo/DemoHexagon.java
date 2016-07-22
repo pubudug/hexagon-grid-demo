@@ -24,9 +24,14 @@ public class DemoHexagon extends Hexagon {
         dbg.drawPolygon(p);
     }
 
-    public void drawCoordinates(Graphics2D dbg) {
+    public void drawCubeCoordinates(Graphics2D dbg) {
         dbg.drawString(getCubeX() + "," + getCubeY() + "," + getCubeZ(), (int) getCenter().getX() - getSize() / 2,
                 (int) getCenter().getY());
+    }
+
+    public void drawOffsetCoordinates(Graphics2D dbg) {
+        dbg.drawString(getOffsetCoordinateColumn() + "," + getOffsetCoordinateRow(),
+                (int) getCenter().getX() - getSize() / 3, (int) getCenter().getY());
     }
 
 }

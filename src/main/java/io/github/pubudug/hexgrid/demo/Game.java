@@ -32,9 +32,11 @@ public class Game {
                 gamePanel.paintScreen();
             }
         };
+        ControlPanel controlPanel = new ControlPanel(grid);
 
         JFrame frame = new JFrame("Hexagon grid demo");
         frame.add(gamePanel, BorderLayout.CENTER);
+        frame.add(controlPanel, BorderLayout.EAST);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

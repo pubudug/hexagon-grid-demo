@@ -71,7 +71,7 @@ public class GamePanel extends JPanel {
 
         grid.draw(dbg);
 
-        grid.drawMouseOverCoordinates(dbg);
+        grid.drawMouseOverDetails(dbg);
 
     }
 
