@@ -11,7 +11,7 @@ public class DemoStats extends Stats {
     }
 
     void draw(Graphics dbg) {
-        dbg.setColor(Color.blue);
+        dbg.setColor(Color.white);
         Font font = new Font("SansSerif", Font.BOLD, 12);
         dbg.setFont(font);
         dbg.drawString("Average FPS/UPS: " + getAverageFPS() + ", " + getAverageUPS(), 20, 25);

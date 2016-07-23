@@ -7,20 +7,18 @@ import java.util.Optional;
 
 import io.github.pubudug.hexgrid.HexagonFactory;
 import io.github.pubudug.hexgrid.HexagonGrid;
-import lombok.Getter;
 import lombok.Setter;
 
+@Setter
 public class DemoHexagonGrid extends HexagonGrid<DemoHexagon> {
 
     private Optional<DemoHexagon> mouseOverHexagon;
 
-    @Getter
-    @Setter
     private volatile boolean drawCubeCoordinates;
 
-    @Getter
-    @Setter
     private volatile boolean drawOffsetCoordinates;
+
+    private volatile boolean drawTerrainType;
 
     DemoHexagonGrid(HexagonFactory<DemoHexagon> hexagonFactory, int columns, int rows, int size) {
         super(hexagonFactory, columns, rows, size);
@@ -36,6 +34,9 @@ public class DemoHexagonGrid extends HexagonGrid<DemoHexagon> {
             }
             if (drawOffsetCoordinates) {
                 demoHexagon.drawOffsetCoordinates(dbg);
+            }
+            if(drawTerrainType){
+                demoHexagon.drawTerrainType(dbg);
             }
         }
     }

@@ -67,11 +67,12 @@ public class GamePanel extends JPanel {
         dbg.setColor(Color.white);
         dbg.fillRect(0, 0, width, height);
 
-        stats.draw(dbg);
 
         grid.draw(dbg);
 
         grid.drawMouseOverDetails(dbg);
+
+        stats.draw(dbg);
 
     }
 
