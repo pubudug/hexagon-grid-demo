@@ -16,8 +16,11 @@ public class Game {
 
         TerrainMap map = new TerrainMap(new HardCodedTerrainMapReader());
         DemoHexagonGrid grid = new DemoHexagonGrid(new DemoHexagonFactory(map), map.getColumns(), map.getRows(), size);
+
+        Unit unit = new Unit();
+        grid.getHexagon(1, 1).setUnit(unit);
         GamePanel gamePanel = new GamePanel((int) grid.getHexagon(map.getColumns() - 1, 0).getCenter().getX(),
-                (int) grid.getHexagon(0, map.getRows() - 1).getCenter().getY(), stats, grid);
+                (int) grid.getHexagon(0, map.getRows() - 1).getCenter().getY(), stats, grid, unit);
         GameLoop loop = new GameLoop(period, stats) {
 
             @Override

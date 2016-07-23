@@ -6,10 +6,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.util.List;
 
 import javax.swing.JPanel;
+
+import io.github.pubudug.hexgrid.HumanHexagonAttributes;
+import io.github.pubudug.hexgrid.ShortestPathCalculator;
 
 public class GamePanel extends JPanel {
     /**
@@ -27,28 +31,31 @@ public class GamePanel extends JPanel {
 
     private DemoHexagonGrid grid;
 
-    public GamePanel(int width, int height, DemoStats stats, DemoHexagonGrid grid) {
+    private Unit unit;
+
+    public GamePanel(int width, int height, DemoStats stats, DemoHexagonGrid grid, Unit unit) {
         this.width = width;
         this.height = height;
         this.grid = grid;
+        this.unit = unit;
         setPreferredSize(new Dimension(width, height));
         this.stats = stats;
-        addMouseMotionListener(new MouseMotionListener() {
-
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseMoved(MouseEvent e) {
-                grid.mouseOverHexagon(e.getPoint());
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-
+            public void mouseClicked(MouseEvent e) {
+                if (unit.isMoveActoinComplete()) {
+                    DemoHexagon to = grid.getHexagonContainingPixel(e.getX(), e.getY());
+                    ShortestPathCalculator<DemoHexagon> calculator = new ShortestPathCalculator<DemoHexagon>(grid,
+                            new HumanHexagonAttributes<DemoHexagon>());
+                    List<DemoHexagon> path = calculator.findShortestPath(unit.getHexagon(), to);
+                    unit.setMoveAction(path);
+                }
             }
         });
     }
 
     void update() {
-
+        unit.update();
     }
 
     void render() {
@@ -67,10 +74,9 @@ public class GamePanel extends JPanel {
         dbg.setColor(Color.white);
         dbg.fillRect(0, 0, width, height);
 
-
         grid.draw(dbg);
 
-        grid.drawMouseOverDetails(dbg);
+        unit.draw(dbg);
 
         stats.draw(dbg);
 
