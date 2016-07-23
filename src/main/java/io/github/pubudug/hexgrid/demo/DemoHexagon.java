@@ -7,16 +7,14 @@ import java.awt.Polygon;
 import java.util.List;
 
 import io.github.pubudug.hexgrid.Coordinate;
-import io.github.pubudug.hexgrid.Hexagon;
 import io.github.pubudug.hexgrid.Point;
+import io.github.pubudug.hexgrid.TerrainType;
+import io.github.pubudug.hexgrid.TestHexagon;
 
-public class DemoHexagon extends Hexagon {
+public class DemoHexagon extends TestHexagon {
 
-    private TerrainType terrainType;
-
-    DemoHexagon(Coordinate coordinate, int size, TerrainType terrainType) {
-        super(coordinate, size);
-        this.terrainType = terrainType;
+    protected DemoHexagon(Coordinate coordinate, int size, TerrainType terrainType) {
+        super(coordinate, size, terrainType);
     }
 
     public void draw(Graphics dbg) {
@@ -25,7 +23,7 @@ public class DemoHexagon extends Hexagon {
         for (Point corner : corners) {
             p.addPoint((int) corner.getX(), (int) corner.getY());
         }
-        dbg.setColor(terrainType.getColor());
+        dbg.setColor(getTerrainType().getColor());
         dbg.fillPolygon(p);
     }
 
@@ -43,7 +41,7 @@ public class DemoHexagon extends Hexagon {
 
     public void drawTerrainType(Graphics2D dbg) {
         dbg.setColor(Color.black);
-        dbg.drawString(terrainType.name(), (int) getCenter().getX() - getSize() / 3, (int) getCenter().getY());
+        dbg.drawString(getTerrainType().name(), (int) getCenter().getX() - getSize() / 3, (int) getCenter().getY());
     }
 
 }

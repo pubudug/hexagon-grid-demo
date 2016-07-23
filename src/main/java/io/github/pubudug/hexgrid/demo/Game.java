@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import io.github.pubudug.hexgrid.HardCodedTerrainMapReader;
+import io.github.pubudug.hexgrid.TerrainMap;
+
 public class Game {
     public static void main(String[] args) {
         int frameRate = 60;

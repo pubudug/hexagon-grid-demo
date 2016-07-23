@@ -2,6 +2,7 @@ package io.github.pubudug.hexgrid.demo;
 
 import io.github.pubudug.hexgrid.Coordinate;
 import io.github.pubudug.hexgrid.HexagonFactory;
+import io.github.pubudug.hexgrid.TerrainMap;
 
 public class DemoHexagonFactory implements HexagonFactory<DemoHexagon> {
 
