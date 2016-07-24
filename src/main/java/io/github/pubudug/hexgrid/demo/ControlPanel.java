@@ -7,8 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class ControlPanel extends JPanel {
 
@@ -26,6 +26,11 @@ public class ControlPanel extends JPanel {
     private void initialize() {
         JPanel coordinatesPanel = getCoordinatesPanel();
         add(coordinatesPanel);
+        JLabel description = new JLabel();
+        description.setText("<html>The movement costs are as follows. Trees-2, Water-4, Hills-3, Flat-1. "
+                + "Click on a hex to move the 'unit' to that hex via the shortest path.</html>");
+        description.setPreferredSize(coordinatesPanel.getPreferredSize());
+        add(description);
     }
 
     private JPanel getCoordinatesPanel() {

@@ -47,16 +47,16 @@ public class Unit {
         if (!moveActionComplete) {
             Point nextCenter = moveList.peek().getCenter();
 
-            double xDiff = nextCenter.getX() - x;
-            double yDiff = nextCenter.getY() - y;
+            double xDiff = nextCenter.getX() - hexagon.getCenter().getX();
+            double yDiff = nextCenter.getY() - hexagon.getCenter().getY();
 
             x = (int) (x + xDiff * 0.1);
             y = (int) (y + yDiff * 0.1);
 
-            int allowedError = 15;
+            int allowedError = 10;
             double error = sqrt(pow(abs(nextCenter.getX() - x), 2) + pow(abs(nextCenter.getY() - y), 2));
             if (error < allowedError) {
-                setHexagon(moveList.poll());
+                moveList.poll().setUnit(this);
             }
             if (moveList.isEmpty()) {
                 moveActionComplete = true;
