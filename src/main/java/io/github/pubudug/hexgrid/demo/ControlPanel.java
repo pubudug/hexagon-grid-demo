@@ -26,11 +26,30 @@ public class ControlPanel extends JPanel {
     private void initialize() {
         JPanel coordinatesPanel = getCoordinatesPanel();
         add(coordinatesPanel);
+
+        JCheckBox drawVisibility = new JCheckBox("Draw metadata on visible hexes only");
+        add(drawVisibility);
+
+        drawVisibility.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                grid.setDrawVisibility(drawVisibility.isSelected());
+            }
+        });
+
         JLabel description = new JLabel();
         description.setText("<html>The movement costs are as follows. Trees-2, Water-4, Hills-3, Flat-1. "
                 + "Click on a hex to move the 'unit' to that hex via the shortest path.</html>");
         description.setPreferredSize(coordinatesPanel.getPreferredSize());
         add(description);
+
+        description = new JLabel();
+        description.setText(
+                "<html>The unit has a visible range of 2 hexagons." + "The vision is blocked by hills.</html>");
+        description.setPreferredSize(coordinatesPanel.getPreferredSize());
+        add(description);
+
     }
 
     private JPanel getCoordinatesPanel() {

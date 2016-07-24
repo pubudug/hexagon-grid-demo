@@ -12,8 +12,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import io.github.pubudug.hexgrid.HumanHexagonAttributes;
 import io.github.pubudug.hexgrid.ShortestPathCalculator;
+import io.github.pubudug.hexgrid.VisibilityCalculator;
 
 public class GamePanel extends JPanel {
     /**
@@ -46,7 +46,7 @@ public class GamePanel extends JPanel {
                 if (unit.isMoveActoinComplete()) {
                     DemoHexagon to = grid.getHexagonContainingPixel(e.getX(), e.getY());
                     ShortestPathCalculator<DemoHexagon> calculator = new ShortestPathCalculator<DemoHexagon>(grid,
-                            new HumanHexagonAttributes<DemoHexagon>());
+                            unit.getHexagonAttributes());
                     List<DemoHexagon> path = calculator.findShortestPath(unit.getHexagon(), to);
                     unit.setMoveAction(path);
                 }
@@ -56,6 +56,9 @@ public class GamePanel extends JPanel {
 
     void update() {
         unit.update();
+        VisibilityCalculator<DemoHexagon> v = new VisibilityCalculator<>(unit.getHexagon(), unit.getVisiblityRange(),
+                grid, unit.getHexagonAttributes());
+        grid.setVisible(v.getVisibleHexagons());
     }
 
     void render() {

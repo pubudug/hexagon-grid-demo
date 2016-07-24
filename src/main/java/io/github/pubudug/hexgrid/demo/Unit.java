@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import io.github.pubudug.hexgrid.HexagonAttributes;
+import io.github.pubudug.hexgrid.HumanHexagonAttributes;
 import io.github.pubudug.hexgrid.Point;
 
 public class Unit {
@@ -21,6 +23,8 @@ public class Unit {
     private Queue<DemoHexagon> moveList;
 
     private int x, y;
+
+    private int visiblityRange = 2;
 
     public Unit() {
         moveActionComplete = true;
@@ -78,6 +82,14 @@ public class Unit {
     public void draw(Graphics2D dbg) {
         dbg.setColor(Color.red);
         dbg.drawString("Unit", x, y);
+    }
+
+    public int getVisiblityRange() {
+        return visiblityRange;
+    }
+
+    public HexagonAttributes<DemoHexagon> getHexagonAttributes() {
+        return new HumanHexagonAttributes<DemoHexagon>();
     }
 
 }
