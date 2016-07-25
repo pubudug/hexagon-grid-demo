@@ -24,10 +24,13 @@ public class Unit {
 
     private int x, y;
 
-    private int visiblityRange = 2;
+    private int visiblityRange = 3;
+
+    private boolean updateVisibility;
 
     public Unit() {
         moveActionComplete = true;
+        setUpdateVisibility(true);
     }
 
     void setHexagon(DemoHexagon hexagon) {
@@ -39,6 +42,7 @@ public class Unit {
             Point center = hexagon.getCenter();
             this.x = (int) center.getX();
             this.y = (int) center.getY();
+            setUpdateVisibility(true);
         }
 
     }
@@ -90,6 +94,14 @@ public class Unit {
 
     public HexagonAttributes<DemoHexagon> getHexagonAttributes() {
         return new HumanHexagonAttributes<DemoHexagon>();
+    }
+
+    public boolean isUpdateVisibility() {
+        return updateVisibility;
+    }
+
+    public void setUpdateVisibility(boolean updateVisibility) {
+        this.updateVisibility = updateVisibility;
     }
 
 }

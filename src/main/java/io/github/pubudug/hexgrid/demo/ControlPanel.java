@@ -46,7 +46,7 @@ public class ControlPanel extends JPanel {
 
         description = new JLabel();
         description.setText(
-                "<html>The unit has a visible range of 2 hexagons." + "The vision is blocked by hills.</html>");
+                "<html>The unit has a visible range of 3 hexagons." + "The vision is blocked by hills and trees.</html>");
         description.setPreferredSize(coordinatesPanel.getPreferredSize());
         add(description);
 

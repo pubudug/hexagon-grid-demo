@@ -56,9 +56,12 @@ public class GamePanel extends JPanel {
 
     void update() {
         unit.update();
-        VisibilityCalculator<DemoHexagon> v = new VisibilityCalculator<>(unit.getHexagon(), unit.getVisiblityRange(),
-                grid, unit.getHexagonAttributes());
-        grid.setVisible(v.getVisibleHexagons());
+        if (unit.isUpdateVisibility()) {
+            VisibilityCalculator<DemoHexagon> v = new VisibilityCalculator<>(unit.getHexagon(),
+                    unit.getVisiblityRange(), grid, unit.getHexagonAttributes());
+            grid.setVisible(v.getVisibleHexagons());
+            unit.setUpdateVisibility(false);
+        }
     }
 
     void render() {
