@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import io.github.pubudug.hexgrid.CoordinateGrid;
 import io.github.pubudug.hexgrid.HardCodedTerrainMapReader;
 import io.github.pubudug.hexgrid.TerrainMap;
 
@@ -15,12 +16,20 @@ public class Game {
         int size = 40;
 
         TerrainMap map = new TerrainMap(new HardCodedTerrainMapReader());
-        DemoHexagonGrid grid = new DemoHexagonGrid(new DemoHexagonFactory(map), map.getColumns(), map.getRows(), size);
+        DemoCoordinateFactory coordinateFactory = new DemoCoordinateFactory(map);
+        CoordinateGrid<DemoCoordinate> cg = new CoordinateGrid<DemoCoordinate>(map.getColumns(), map.getRows(),
+                coordinateFactory);
+        DemoHexagonFactory hexagonFactory = new DemoHexagonFactory(size);
+        DemoHexagonGrid grid = new DemoHexagonGrid(cg, hexagonFactory, size);
 
-        Unit unit = new Unit();
-        grid.getHexagon(1, 1).setUnit(unit);
-        GamePanel gamePanel = new GamePanel((int) grid.getHexagon(map.getColumns() - 1, 0).getCenter().getX(),
-                (int) grid.getHexagon(0, map.getRows() - 1).getCenter().getY(), stats, grid, unit);
+        DemoHexagon hex = hexagonFactory.create(cg.getCoordinate(1, 1));
+        Unit unit = new Unit((int) hex.getCenter().getX(), (int) hex.getCenter().getY(), hexagonFactory);
+        cg.getCoordinate(1, 1).setUnit(unit);
+
+        GamePanel gamePanel = new GamePanel(
+                (int) hexagonFactory.create(cg.getCoordinate(map.getColumns() - 1, 0)).getCenter().getX(),
+                (int) hexagonFactory.create(cg.getCoordinate(0, map.getRows() - 1)).getCenter().getY(), stats, grid, cg,
+                unit);
         GameLoop loop = new GameLoop(period, stats) {
 
             @Override

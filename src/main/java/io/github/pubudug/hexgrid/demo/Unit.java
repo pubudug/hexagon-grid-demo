@@ -10,17 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import io.github.pubudug.hexgrid.HexagonAttributes;
-import io.github.pubudug.hexgrid.HumanHexagonAttributes;
+import io.github.pubudug.hexgrid.CoordinateAttributes;
+import io.github.pubudug.hexgrid.HumanCoordinateAttributes;
 import io.github.pubudug.hexgrid.Point;
 
 public class Unit {
 
-    private DemoHexagon hexagon;
+    private DemoCoordinate coordinate;
 
     private boolean moveActionComplete;
 
-    private Queue<DemoHexagon> moveList;
+    private Queue<DemoCoordinate> moveList;
 
     private int x, y;
 
@@ -28,18 +28,21 @@ public class Unit {
 
     private boolean updateVisibility;
 
-    public Unit() {
+    private DemoHexagonFactory hexagonFactory;
+
+    public Unit(int x, int y, DemoHexagonFactory hexagonFactory) {
         moveActionComplete = true;
         setUpdateVisibility(true);
+        this.hexagonFactory = hexagonFactory;
     }
 
-    void setHexagon(DemoHexagon hexagon) {
-        if (this.hexagon != null) {
-            this.hexagon.setUnit(null);
+    void setHexagon(DemoCoordinate coordinate) {
+        if (this.coordinate != null) {
+            this.coordinate.setUnit(null);
         }
-        this.hexagon = hexagon;
-        if (this.hexagon != null) {
-            Point center = hexagon.getCenter();
+        this.coordinate = coordinate;
+        if (this.coordinate != null) {
+            Point center = hexagonFactory.create(coordinate).getCenter();
             this.x = (int) center.getX();
             this.y = (int) center.getY();
             setUpdateVisibility(true);
@@ -53,10 +56,10 @@ public class Unit {
 
     void update() {
         if (!moveActionComplete) {
-            Point nextCenter = moveList.peek().getCenter();
+            Point nextCenter = hexagonFactory.create(moveList.peek()).getCenter();
 
-            double xDiff = nextCenter.getX() - hexagon.getCenter().getX();
-            double yDiff = nextCenter.getY() - hexagon.getCenter().getY();
+            double xDiff = nextCenter.getX() - hexagonFactory.create(coordinate).getCenter().getX();
+            double yDiff = nextCenter.getY() - hexagonFactory.create(coordinate).getCenter().getY();
 
             x = (int) (x + xDiff * 0.1);
             y = (int) (y + yDiff * 0.1);
@@ -64,7 +67,7 @@ public class Unit {
             int allowedError = 10;
             double error = sqrt(pow(abs(nextCenter.getX() - x), 2) + pow(abs(nextCenter.getY() - y), 2));
             if (error < allowedError) {
-                moveList.poll().setUnit(this);
+                hexagonFactory.create(moveList.poll()).getCoordinate().setUnit(this);
             }
             if (moveList.isEmpty()) {
                 moveActionComplete = true;
@@ -72,15 +75,15 @@ public class Unit {
         }
     }
 
-    void setMoveAction(List<DemoHexagon> moveList) {
+    void setMoveAction(List<DemoCoordinate> path) {
         if (moveActionComplete) {
-            this.moveList = new LinkedList<>(moveList);
+            this.moveList = new LinkedList<>(path);
             moveActionComplete = false;
         }
     }
 
-    public DemoHexagon getHexagon() {
-        return hexagon;
+    public DemoCoordinate getCoordinate() {
+        return coordinate;
     }
 
     public void draw(Graphics2D dbg) {
@@ -92,8 +95,8 @@ public class Unit {
         return visiblityRange;
     }
 
-    public HexagonAttributes<DemoHexagon> getHexagonAttributes() {
-        return new HumanHexagonAttributes<DemoHexagon>();
+    public CoordinateAttributes<DemoCoordinate> getHexagonAttributes() {
+        return new HumanCoordinateAttributes<DemoCoordinate>();
     }
 
     public boolean isUpdateVisibility() {

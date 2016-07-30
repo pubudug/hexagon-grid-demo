@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import io.github.pubudug.hexgrid.CoordinateGrid;
 import io.github.pubudug.hexgrid.ShortestPathCalculator;
 import io.github.pubudug.hexgrid.VisibilityCalculator;
 
@@ -33,11 +34,15 @@ public class GamePanel extends JPanel {
 
     private Unit unit;
 
-    public GamePanel(int width, int height, DemoStats stats, DemoHexagonGrid grid, Unit unit) {
+    private CoordinateGrid<DemoCoordinate> cg;
+
+    public GamePanel(int width, int height, DemoStats stats, DemoHexagonGrid grid, CoordinateGrid<DemoCoordinate> cg,
+            Unit unit) {
         this.width = width;
         this.height = height;
         this.grid = grid;
         this.unit = unit;
+        this.cg = cg;
         setPreferredSize(new Dimension(width, height));
         this.stats = stats;
         addMouseListener(new MouseAdapter() {
@@ -45,9 +50,9 @@ public class GamePanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (unit.isMoveActoinComplete()) {
                     DemoHexagon to = grid.getHexagonContainingPixel(e.getX(), e.getY());
-                    ShortestPathCalculator<DemoHexagon> calculator = new ShortestPathCalculator<DemoHexagon>(grid,
+                    ShortestPathCalculator<DemoCoordinate> calculator = new ShortestPathCalculator<DemoCoordinate>(cg,
                             unit.getHexagonAttributes());
-                    List<DemoHexagon> path = calculator.findShortestPath(unit.getHexagon(), to);
+                    List<DemoCoordinate> path = calculator.findShortestPath(unit.getCoordinate(), to.getCoordinate());
                     unit.setMoveAction(path);
                 }
             }
@@ -57,8 +62,8 @@ public class GamePanel extends JPanel {
     void update() {
         unit.update();
         if (unit.isUpdateVisibility()) {
-            VisibilityCalculator<DemoHexagon> v = new VisibilityCalculator<>(unit.getHexagon(),
-                    unit.getVisiblityRange(), grid, unit.getHexagonAttributes());
+            VisibilityCalculator<DemoCoordinate> v = new VisibilityCalculator<DemoCoordinate>(unit.getCoordinate(),
+                    unit.getVisiblityRange(), cg, unit.getHexagonAttributes());
             grid.setVisible(v.getVisibleHexagons());
             unit.setUpdateVisibility(false);
         }
